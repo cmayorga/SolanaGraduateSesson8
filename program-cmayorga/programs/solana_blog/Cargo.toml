@@ -1,0 +1,29 @@
+[package]
+name = "solana_blog"
+version = "0.1.0"
+description = "A blog program built with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "solana_blog"
+
+[features]
+default = []
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+idl-build = ["anchor-lang/idl-build"]
+anchor-debug = ["anchor-lang/anchor-debug"]
+custom-panic = []
+custom-heap = []
+
+[dependencies]
+anchor-lang = "0.31.1"
+
+[profile.release]
+overflow-checks = false
+lto = "fat"
+codegen-units = 1
+opt-level = 3

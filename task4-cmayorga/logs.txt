@@ -1,0 +1,212 @@
+Error: Function _ZN4core5slice4sort6stable14driftsort_main17h13e5cf5e4726cea4E Stack offset of 4104 exceeded max offset of 4096 by 8 bytes, please minimize large stack variables. Estimated function frame size: 4160 bytes. Exceeding the maximum stack offset may cause undefined behavior during execution.
+
+warning: unused import: `anchor_lang::solana_program::hash::hash`
+  --> programs/twitter/src/instructions/add_comment.rs:14:5
+   |
+14 | use anchor_lang::solana_program::hash::hash;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `anchor_lang::solana_program::hash::hash`
+  --> programs/twitter/src/instructions/remove_comment.rs:14:5
+   |
+14 | use anchor_lang::solana_program::hash::hash;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `anchor_lang::prelude::AccountInfo::<'a>::realloc`: Use AccountInfo::resize() instead
+  --> programs/twitter/src/lib.rs:43:1
+   |
+43 | #[program]
+   | ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+   = note: this warning originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: `twitter` (lib) generated 3 warnings (run `cargo fix --lib -p twitter` to apply 2 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.48s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.25s
+     Running unittests src/lib.rs (/home/cmayorga/work/solana-school/task4-cmayorga/target/debug/deps/twitter-7ef48fb10b6eddd7)
+
+Found a 'test' script in the Anchor.toml. Running it as a test suite!
+
+Running test suite: "/home/cmayorga/work/solana-school/task4-cmayorga/Anchor.toml"
+
+yarn run v1.22.22
+warning package.json: No license field
+$ /home/cmayorga/work/solana-school/task4-cmayorga/node_modules/.bin/ts-mocha -p ./tsconfig.json -t 1000000 'tests/**/*.ts'
+
+
+  twitter
+    Initialize Tweet
+      ✔ Should successfully initialize a tweet with valid topic and content (760ms)
+      ✔ Should successfully initialize tweet with exactly 32-byte topic (boundary test) (424ms)
+      ✔ Should successfully initialize tweet with exactly 500-byte content (boundary test) (409ms)
+      ✔ Should successfully initialize tweet with empty content (426ms)
+      ✔ Should successfully initialize tweet with single character topic and content (412ms)
+      ✔ Should successfully initialize tweet with unicode characters and emojis (417ms)
+      ✔ Should fail to initialize tweet when topic exceeds 32 bytes
+      ✔ Should fail to initialize tweet when content exceeds 500 bytes
+      ✔ Should fail to initialize duplicate tweet with same topic and author
+      ✔ Should successfully initialize second tweet with different topic for same author (395ms)
+      ✔ Should allow different users to create tweets with same topic (837ms)
+    Add Reaction
+      ✔ Should successfully add like reaction to tweet (842ms)
+      ✔ Should correctly set reaction type to 'like' enum variant
+      ✔ Should fail when attempting to like the same tweet twice
+      ✔ Should fail when attempting to dislike a tweet that is already liked
+      ✔ Should successfully add dislike reaction to different tweet (436ms)
+      ✔ Should correctly set reaction type to 'dislike' enum variant
+      ✔ Should fail when attempting to dislike the same tweet twice
+      ✔ Should allow multiple users to react to the same tweet (352ms)
+      ✔ Should fail when attempting to react to non-existent tweet
+    Remove Reaction
+      ✔ Should successfully remove existing reaction from tweet (408ms)
+      ✔ Should properly delete reaction account after removal
+      ✔ Should allow adding new reaction after previous reaction was removed (427ms)
+      ✔ Should fail when attempting to remove non-existent reaction
+      ✔ Should fail when attempting to remove another user's reaction
+    Add Comment
+      1) Should fail when attempting to add comment exceeding length limit
+      2) Should successfully add comment with valid length to tweet
+      3) Should successfully add comment with exactly 500 characters (boundary test)
+      4) Should successfully add empty comment to tweet
+      5) Should successfully add comment with unicode characters and emojis
+      6) Should allow multiple users to comment on the same tweet
+      ✔ Should fail when attempting to comment on non-existent tweet
+      7) Should fail when attempting to create duplicate comment with same content
+    Remove Comment
+      8) Should successfully remove existing comment from tweet
+      ✔ Should fail when attempting to remove non-existent comment
+      9) Should fail when attempting to remove another user's comment
+      10) Should allow recreating comment with same content after deletion
+    Edge Cases and Error Handling
+      ✔ Should allow tweet author to react to their own tweet (259ms)
+      11) Should allow tweet author to comment on their own tweet
+      ✔ Should maintain correct final state across all tweets and reactions
+
+
+  29 passing (7s)
+  11 failing
+
+  1) twitter
+       Add Comment
+         Should fail when attempting to add comment exceeding length limit:
+
+      Expected 'CommentTooLong' error for comment longer than 500 bytes
+      + expected - actual
+
+      -AccountNotInitialized
+      +CommentTooLong
+      
+      at /home/cmayorga/work/solana-school/task4-cmayorga/tests/twitter.ts:554:16
+      at Generator.throw (<anonymous>)
+      at rejected (tests/twitter.ts:29:65)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  2) twitter
+       Add Comment
+         Should successfully add comment with valid length to tweet:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  3) twitter
+       Add Comment
+         Should successfully add comment with exactly 500 characters (boundary test):
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  4) twitter
+       Add Comment
+         Should successfully add empty comment to tweet:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  5) twitter
+       Add Comment
+         Should successfully add comment with unicode characters and emojis:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  6) twitter
+       Add Comment
+         Should allow multiple users to comment on the same tweet:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  7) twitter
+       Add Comment
+         Should fail when attempting to create duplicate comment with same content:
+
+      Expected 'already in use' error when trying to create duplicate comment
+      + expected - actual
+
+      -false
+      +true
+      
+      at /home/cmayorga/work/solana-school/task4-cmayorga/tests/twitter.ts:692:16
+      at Generator.throw (<anonymous>)
+      at rejected (tests/twitter.ts:29:65)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  8) twitter
+       Remove Comment
+         Should successfully remove existing comment from tweet:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  9) twitter
+       Remove Comment
+         Should fail when attempting to remove another user's comment:
+
+      Expected constraint or seeds error when trying to remove someone else's comment
+      + expected - actual
+
+      -false
+      +true
+      
+      at /home/cmayorga/work/solana-school/task4-cmayorga/tests/twitter.ts:756:16
+      at Generator.throw (<anonymous>)
+      at rejected (tests/twitter.ts:29:65)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  10) twitter
+       Remove Comment
+         Should allow recreating comment with same content after deletion:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+  11) twitter
+       Edge Cases and Error Handling
+         Should allow tweet author to comment on their own tweet:
+     Error: AnchorError caused by account: comment. Error Code: AccountNotInitialized. Error Number: 3012. Error Message: The program expected this account to be already initialized.
+      at AnchorError.parse (node_modules/@coral-xyz/anchor/src/error.ts:168:14)
+      at translateError (node_modules/@coral-xyz/anchor/src/error.ts:277:35)
+      at MethodsBuilder.rpc [as _rpcFn] (node_modules/@coral-xyz/anchor/src/program/namespace/rpc.ts:35:29)
+      at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+
+
+error Command failed with exit code 11.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

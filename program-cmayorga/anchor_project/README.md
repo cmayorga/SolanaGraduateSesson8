@@ -1,0 +1,1 @@
+App is located at programs/solana_blog
